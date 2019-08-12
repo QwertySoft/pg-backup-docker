@@ -8,7 +8,7 @@ export PGPASSWORD="$POSTGRES_PASSWORD"
 pg_dump -h $POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER $POSTGRES_DATABASE | gzip > $FILE || exit 3
 echo "SQL backup successfull"
 
-if [! -z "$BUCKET"] then
+if [ ! -z "$BUCKET" ]; then
   echo "Uploading dump to $BUCKET"
   # export AWS_ACCESS_KEY_ID
   # export AWS_SECRET_ACCESS_KEY
@@ -17,7 +17,7 @@ if [! -z "$BUCKET"] then
   echo "SQL backup uploaded successfully"
 fi
 
-if [! -z "$MAIL_TO"] then
+if [ ! -z "$MAIL_TO" ]; then
   echo "Sending mail to $MAIL_TO"
   echo "Backup of ${POSTGRES_DATABASE} database successfull at ${NOW}" | mail -v \
     -r $MAIL_FROM \
