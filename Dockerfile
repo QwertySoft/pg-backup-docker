@@ -11,8 +11,6 @@ RUN mkdir -p /backups
 ADD backup.sh /usr/bin/backup
 RUN chmod +x /usr/bin/backup
 
-RUN ln -s /usr/bin/backup /etc/periodic/daily
+RUN ln -s /usr/bin/backup /etc/periodic/15min
 
-ENTRYPOINT "crond"
-
-CMD ["-f", "-d", "8"]
+CMD [ "crond", "-l", "2", "-b" ]
