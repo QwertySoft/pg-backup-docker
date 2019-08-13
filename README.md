@@ -4,7 +4,7 @@ A background backup utility for postgreSQL and AWS
 
 
 Docker compose example
-
+```yml
 version: '3'
 
 services:
@@ -44,3 +44,4 @@ volumes:
     driver: local
   database_backup:
     driver: local
+```
