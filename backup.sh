@@ -19,15 +19,16 @@ fi
 
 if [ ! -z "$MAIL_TO" ]; then
   echo "Sending mail to $MAIL_TO"
-  echo "Backup of ${POSTGRES_DATABASE} database successfull at ${NOW}" | mail -v \
-    -r $MAIL_FROM \
-    -s "[${POSTGRES_DATABASE}] backup ${NOW}" \
-    -A $FILE \
-    -S smtp="${MAIL_HOST}:${MAIL_PORT}" \
-    -S smtp-use-starttls \
-    -S smtp-auth=login \
-    -S smtp-auth-user=$MAIL_FROM \
-    -S smtp-auth-password=$MAIL_PASSWORD \
-    -S ssl-verify=ignore \
-    $MAIL_TO || exit 5
+  swaks --header "Subject:Backup of ${POSTGRES_DATABASE} database successfull at ${NOW}" \
+        --from $MAIL_FROM \
+        --server "${MAIL_HOST}" \
+        --port "${MAIL_PORT}" \
+        --auth LOGIN \
+        --auth-user "${MAIL_FROM}" \
+        --auth-password "${MAIL_PASSWORD}" \
+        --to $MAIL_TO \
+        --body "Automated backups " \
+        --attach $FILE || exit 5
+
+  
 fi
